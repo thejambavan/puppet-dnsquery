@@ -2,6 +2,9 @@
 # array will be a IPv4 address.
 # An optional lambda can be given to return a default value in case the
 # lookup fails. The lambda will only be called if the lookup failed.
+#
+require 'ipaddr'
+
 Puppet::Functions.create_function(:dns_ptr) do
   dispatch :dns_ptr do
     param 'String', :record
@@ -13,8 +16,11 @@ Puppet::Functions.create_function(:dns_ptr) do
   end
 
   def dns_ptr(record)
+    record_ip = IPAddr.new record
+    ptr_record = record_ip.reverse
+
     Resolv::DNS.new.getresources(
-      record, Resolv::DNS::Resource::IN::PTR
+      ptr_record, Resolv::DNS::Resource::IN::PTR
     ).collect do |res|
       res.name.to_s
     end
