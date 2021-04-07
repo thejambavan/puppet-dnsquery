@@ -1,4 +1,4 @@
-# Retrieves DNS A records and returns it as an array. Each record in the
+# Retrieves DNS PTR record and return it as an array. Each record in the
 # array will be a IPv4 address.
 # An optional lambda can be given to return a default value in case the
 # lookup fails. The lambda will only be called if the lookup failed.
